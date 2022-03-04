@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,11 +24,18 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User userById(@PathVariable("id") Long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
+    public List<User> userByLastname(@PathVariable("name") String name) {
+        List<User> users = this.userRepository.findAll();
+        List<User> returned = new ArrayList<>();
+        for (User user : users) {
+            if (user.getLastName().equals(name)) {
+                returned.add(user);
+            }
+        }
+        if (returned.size() > 0){
+            return returned;
         }
         return null;
     }
+
 }

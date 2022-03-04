@@ -21,9 +21,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("/{id}")
-    public User UserById(@PathVariable("id") Long id) {
-        return userService.userById(id);
+    @GetMapping("/{name}")
+    public List<User> searchByLastName(@PathVariable("name") String name) {
+        return userService.userByLastname(name);
     }
 
     @PostMapping("post")
