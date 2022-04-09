@@ -13,7 +13,7 @@ public class UserGuideApplication implements CommandLineRunner{
 		SpringApplication.run(UserGuideApplication.class, args);
 	}
 
-	@Autowired
+
 	private UserRepository userRepository;
 
 	@Override

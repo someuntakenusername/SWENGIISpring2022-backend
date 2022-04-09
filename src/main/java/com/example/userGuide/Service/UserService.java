@@ -24,16 +24,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> userByLastname(@PathVariable("name") String name) {
+    public User userByLastname(@PathVariable("name") String name) {
         List<User> users = this.userRepository.findAll();
         List<User> returned = new ArrayList<>();
+        System.out.println(users);
         for (User user : users) {
             if (user.getLastName().equals(name)) {
-                returned.add(user);
+                return user;
             }
-        }
-        if (returned.size() > 0){
-            return returned;
         }
         return null;
     }

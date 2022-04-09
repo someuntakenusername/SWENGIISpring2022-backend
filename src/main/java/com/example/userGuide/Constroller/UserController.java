@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("/{name}")
-    public List<User> searchByLastName(@PathVariable("name") String name) {
+    public User searchByLastName(@PathVariable("name") String name) {
         System.out.println(name);
         return userService.userByLastname(name);
     }
