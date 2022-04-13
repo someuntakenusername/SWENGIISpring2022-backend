@@ -38,12 +38,12 @@ public class UserController {
     User mockUsers = new User("sam", "Beyer", "sam_beyer1@baylor.edu", "password");
     @Test
     public void retrieveDetailsForUser() throws Exception {
-        Mockito.when(userService.userByLastname("Beyer")).thenReturn(mockUsers);
+        Mockito.when(userService.userByLastname(Mockito.anyString())).thenReturn(mockUsers);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
                 "/user/Beyer").accept(
                 MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        System.out.println(result.getResponse().getContentAsString());
+        System.out.println(result.getResponse().getContentLength());
         assert(result.getResponse().getContentAsString().length() > 0);
         //This isn't working, I am going to request help
     }

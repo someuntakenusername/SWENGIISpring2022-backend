@@ -11,8 +11,10 @@ public class Location {
     double distance;
     private String phone;
     private int rank;
+    public double latitude;
+    public double longitude;
 
-    public Location(String id, String imageSrc, String name, double rating, int reviewCount, int price, double distance, String phone) {
+    public Location(String id, String imageSrc, String name, double rating, int reviewCount, int price, double distance, String phone, double latitude, double longitude) {
         this.id = id;
         this.imageSrc = imageSrc;
         this.name = name;
@@ -22,6 +24,8 @@ public class Location {
         this.distance = distance;
         this.phone = phone;
         this.rank = -1;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getId() {

@@ -74,7 +74,17 @@ public class YelpController {
             }catch(JSONException e){
                 phone = null;
             }
-            locations.add(new Location(id, imageSrc, name, ratings, reviewCount, prices, distance, phone));
+            double latitude = -1;
+            double longitude = -1;
+            try{
+                JSONObject coordinates = loc.getJSONObject("coordinates");
+                latitude = coordinates.getDouble("latitude");
+                longitude = coordinates.getDouble("longitude");
+            }catch(JSONException e){
+                phone = null;
+            }
+
+            locations.add(new Location(id, imageSrc, name, ratings, reviewCount, prices, distance, phone, latitude, longitude));
         }
 
         locations.sort((O1, O2) -> {
