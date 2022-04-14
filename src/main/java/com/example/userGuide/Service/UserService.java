@@ -21,10 +21,11 @@ public class UserService {
     }
 
     public User createUser(User user){
+        System.out.println(user);
         return userRepository.save(user);
     }
 
-    public User userByLastname(@PathVariable("name") String name) {
+    public User userByLastname(String name) {
         List<User> users = this.userRepository.findAll();
         List<User> returned = new ArrayList<>();
         System.out.println(users);

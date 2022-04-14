@@ -1,7 +1,9 @@
 package com.example.userGuide.model;
 
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
     private String id;
     private String imageSrc;
     private String name;

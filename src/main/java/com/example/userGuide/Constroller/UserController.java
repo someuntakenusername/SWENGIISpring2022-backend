@@ -21,9 +21,8 @@ public class UserController {
     }
 
     @GetMapping("/{name}")
-    public User searchByLastName(@PathVariable("name") String name) {
-        System.out.println(name);
-        return userService.userByLastname(name);
+    public User searchByLastName(@PathVariable("name") Object name) {
+        return userService.userByLastname((String)name);
     }
 
     @RequestMapping(value = "/createuser", method = RequestMethod.POST)
