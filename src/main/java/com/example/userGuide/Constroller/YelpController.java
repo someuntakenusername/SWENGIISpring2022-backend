@@ -1,13 +1,17 @@
 package com.example.userGuide.Constroller;
 
 import com.example.userGuide.Service.JsonReader;
+import com.example.userGuide.Service.PreferenceService;
 import com.example.userGuide.Service.YelpService;
 import com.example.userGuide.UserGuideApplication;
 import com.example.userGuide.model.Location;
+import com.example.userGuide.model.Preference;
+import com.example.userGuide.repository.PreferenceRepository;
 import net.sf.ehcache.Element;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,13 +19,34 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("locations/")
 public class YelpController {
 
+    @Autowired
+    private PreferenceService preferenceService;
+
+    @GetMapping("/{id}")
+    public List<Location> getRecommended(@PathVariable("id") Object id) throws JSONException, IOException {
+       Preference pref = preferenceService.getPreference((String) id);
+       if (pref != null){
+           return RecAlgoOne(Integer.parseInt(pref.cost), pref.rating, pref.reviews, pref.contact, pref.city);
+       }else{
+           return null;
+       }
+    }
+
     @GetMapping("/{cost}/{rating}/{reviews}/{contact}/{location}")
     public List<Location> RecAlgo(@PathVariable("cost") int cost, @PathVariable("rating") String rating, @PathVariable("reviews") String reviews, @PathVariable("contact") String contact, @PathVariable("location") String location) throws IOException, JSONException {
+        return getLocations(cost, rating, reviews, contact, location);
+    }
+
+    public List<Location> RecAlgoOne(int cost, String rating, String reviews, String contact, String location) throws IOException, JSONException {
+        return getLocations(cost, rating, reviews, contact, location);
+    }
+
+    private List<Location> getLocations(int cost, String rating, String reviews, String contact, String location) throws IOException, JSONException {
         if (UserGuideApplication.locationCache == null || !UserGuideApplication.locationCache.isKeyInCache(cost + rating + reviews + contact + location)) {
             String output = new YelpService().RecAlgorithm(cost, rating, reviews, contact, location);
             JSONObject json = JsonReader.readJsonFromString(output);
