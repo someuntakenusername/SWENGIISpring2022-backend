@@ -15,9 +15,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("locations/")
+@CrossOrigin(origins = "*")
 public class YelpController {
 
     @GetMapping("/{cost}/{rating}/{reviews}/{contact}/{location}")
