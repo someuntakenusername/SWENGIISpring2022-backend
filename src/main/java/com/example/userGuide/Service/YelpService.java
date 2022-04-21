@@ -22,12 +22,12 @@ public class YelpService {
 
     public String RecAlgorithm(int cost, String rating, String reviews, String contact, String location) throws IOException {
         location = location.replaceAll(" ", "%20");
-        URL url = new URL("https://blueflannel-cors.herokuapp.com/https://api.yelp.com/v3/businesses/search?categories=skiresorts&location=" + location + "&limit=50&sort_by=best_match/");
+        URL url = new URL("https://blueflannel-cors.herokuapp.com/http://api.yelp.com/v3/businesses/search?categories=skiresorts&location=" + location + "&limit=50&sort_by=best_match");
         return getYelpQuery(url);
     }
 
     public String getById(String id) throws IOException {
-        URL url = new URL("https://blueflannel-cors.herokuapp.com/https://api.yelp.com/v3/businesses/" + id + "/");
+        URL url = new URL("https://blueflannel-cors.herokuapp.com/http://api.yelp.com/v3/businesses/" + id + "/");
         return getYelpQuery(url);
     }
 
