@@ -27,7 +27,7 @@ public class YelpService {
     }
 
     public String getById(String id) throws IOException {
-        URL url = new URL("https://blueflannel-cors.herokuapp.com/http://api.yelp.com/v3/businesses/" + id + "/");
+        URL url = new URL("https://blueflannel-cors.herokuapp.com/http://api.yelp.com/v3/businesses/" + id);
         return getYelpQuery(url);
     }
 
