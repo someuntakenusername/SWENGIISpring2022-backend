@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.nio.charset.Charset;
 
 import org.json.JSONException;
@@ -25,6 +23,15 @@ public class YelpService {
     public String RecAlgorithm(int cost, String rating, String reviews, String contact, String location) throws IOException {
         location = location.replaceAll(" ", "%20");
         URL url = new URL("http://127.0.0.1:8080/http://api.yelp.com/v3/businesses/search?categories=skiresorts&location=" + location + "&limit=50&sort_by=best_match");
+        return getYelpQuery(url);
+    }
+
+    public String getById(String id) throws IOException {
+        URL url = new URL("http://127.0.0.1:8080/http://api.yelp.com/v3/businesses/" + id);
+        return getYelpQuery(url);
+    }
+
+    private String getYelpQuery(URL url) throws IOException {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setDoOutput(true);
@@ -40,6 +47,7 @@ public class YelpService {
         }
         in.close();
         con.disconnect();
+        System.out.println(content.toString());
         return content.toString();
     }
 

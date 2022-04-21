@@ -27,6 +27,77 @@ public class YelpController {
     @Autowired
     private PreferenceService preferenceService;
 
+    @Autowired
+    private YelpService yelpService;
+
+    @GetMapping("/byid/{id}")
+    public Location getById(@PathVariable("id") Object ids) throws IOException, JSONException {
+        System.out.println((String)ids);
+        String output = yelpService.getById((String)ids);
+        JSONObject loc = JsonReader.readJsonFromString(output);
+        String id;
+        String imageSrc;
+        String name;
+        double ratings;
+        int reviewCount;
+        int prices;
+        double distance;
+        String phone;
+        try {
+            id = loc.getString("id");
+        } catch (JSONException e) {
+            id = null;
+        }
+        try {
+            imageSrc = loc.getString("image_url");
+        } catch (JSONException e) {
+            imageSrc = null;
+        }
+        try {
+            name = loc.getString("name");
+        } catch (JSONException e) {
+            name = null;
+        }
+        try {
+            ratings = loc.getDouble("rating");
+        } catch (JSONException e) {
+            ratings = -1;
+        }
+        try {
+            reviewCount = loc.getInt("review_count");
+        } catch (JSONException e) {
+            reviewCount = -1;
+        }
+        try {
+            prices = loc.getString("price").length();
+        } catch (JSONException e) {
+            prices = -1;
+        }
+        try {
+            distance = loc.getDouble("distance");
+        } catch (JSONException e) {
+            distance = -1;
+        }
+        try {
+            phone = loc.getString("phone");
+        } catch (JSONException e) {
+            phone = null;
+        }
+        double latitude = -1;
+        double longitude = -1;
+        try {
+            JSONObject coordinates = loc.getJSONObject("coordinates");
+            latitude = coordinates.getDouble("latitude");
+            longitude = coordinates.getDouble("longitude");
+        } catch (JSONException e) {
+            phone = null;
+        }
+
+        return new Location(id, imageSrc, name, ratings, reviewCount, prices, distance, phone, latitude, longitude);
+
+    }
+
+
     @GetMapping("/{id}")
     public List<Location> getRecommended(@PathVariable("id") Object id) throws JSONException, IOException {
        Preference pref = preferenceService.getPreference((String) id);
