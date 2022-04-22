@@ -25,6 +25,11 @@ public class YelpService {
         URL url = new URL("https://blueflannel-cors.herokuapp.com/http://api.yelp.com/v3/businesses/search?categories=skiresorts&location=" + location + "&limit=50&sort_by=best_match");
         return getYelpQuery(url);
     }
+    public String RecAlgorithm(String location) throws IOException {
+        location = location.replaceAll(" ", "%20");
+        URL url = new URL("https://blueflannel-cors.herokuapp.com/http://api.yelp.com/v3/businesses/search?location=" + location + "&sort_by=best_match");
+        return getYelpQuery(url);
+    }
 
     public String getById(String id) throws IOException {
         URL url = new URL("https://blueflannel-cors.herokuapp.com/http://api.yelp.com/v3/businesses/" + id);
