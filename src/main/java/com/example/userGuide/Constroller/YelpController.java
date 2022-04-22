@@ -30,6 +30,12 @@ public class YelpController {
     @Autowired
     private YelpService yelpService;
 
+
+    @GetMapping("/search/{location}")
+    public List<Location> searchLocation(@PathVariable("location") Object name) throws IOException, JSONException {
+        return getLocations((String) name);
+    }
+
     @GetMapping("/byid/{id}")
     public Location getById(@PathVariable("id") Object ids) throws IOException, JSONException {
         System.out.println((String)ids);
@@ -272,4 +278,74 @@ public class YelpController {
         }
     }
 
+
+    private List<Location> getLocations(String location) throws IOException, JSONException {
+        String output = new YelpService().RecAlgorithm(location);
+        JSONObject json = JsonReader.readJsonFromString(output);
+        JSONArray businesses = (JSONArray) json.get("businesses");
+        List<Location> locations = new ArrayList<>();
+        for (int i = 0; i < businesses.length(); i++) {
+            JSONObject loc = businesses.getJSONObject(i);
+            String id;
+            String imageSrc;
+            String name;
+            double ratings;
+            int reviewCount;
+            int prices;
+            double distance;
+            String phone;
+            try {
+                id = loc.getString("id");
+            } catch (JSONException e) {
+                id = null;
+            }
+            try {
+                imageSrc = loc.getString("image_url");
+            } catch (JSONException e) {
+                imageSrc = null;
+            }
+            try {
+                name = loc.getString("name");
+            } catch (JSONException e) {
+                name = null;
+            }
+            try {
+                ratings = loc.getDouble("rating");
+            } catch (JSONException e) {
+                ratings = -1;
+            }
+            try {
+                reviewCount = loc.getInt("review_count");
+            } catch (JSONException e) {
+                reviewCount = -1;
+            }
+            try {
+                prices = loc.getString("price").length();
+            } catch (JSONException e) {
+                prices = -1;
+            }
+            try {
+                distance = loc.getDouble("distance");
+            } catch (JSONException e) {
+                distance = -1;
+            }
+            try {
+                phone = loc.getString("phone");
+            } catch (JSONException e) {
+                phone = null;
+            }
+            double latitude = -1;
+            double longitude = -1;
+            try {
+                JSONObject coordinates = loc.getJSONObject("coordinates");
+                latitude = coordinates.getDouble("latitude");
+                longitude = coordinates.getDouble("longitude");
+            } catch (JSONException e) {
+                phone = null;
+            }
+
+            locations.add(new Location(id, imageSrc, name, ratings, reviewCount, prices, distance, phone, latitude, longitude));
+        }
+        return locations;
+    }
 }
