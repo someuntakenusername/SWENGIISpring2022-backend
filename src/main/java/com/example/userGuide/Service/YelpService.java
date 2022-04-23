@@ -1,6 +1,8 @@
 package com.example.userGuide.Service;
 
 import com.example.userGuide.model.User;
+import com.example.userGuide.model.UserLocation;
+import com.example.userGuide.repository.UserLocationRepository;
 import com.example.userGuide.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,39 @@ import java.util.*;
 
 @Service
 public class YelpService {
+
+    @Autowired
+    UserLocationRepository userLocationRepository;
+
+    public UserLocation createLocation(int cost, String name, String address, String phone, long userID){
+        return userLocationRepository.save(new UserLocation(cost, name, address, phone, userID));
+    }
+
+    public List<UserLocation> getUserLocations(String userID){
+        Long userIDs = Long.parseLong(userID);
+        List<UserLocation> all = userLocationRepository.findAll();
+        List<UserLocation> toReturn = new ArrayList<>();
+        for (UserLocation userLocation : all) {
+            if (userLocation.getUserID().equals(userIDs)) {
+                toReturn.add(userLocation);
+            }
+        }
+        return toReturn;
+    }
+
+    public UserLocation removeUserLocation(String locationID, String userID){
+        Long locationIDs = Long.parseLong(locationID);
+        Long userIDs = Long.parseLong(userID);
+        List<UserLocation> all = userLocationRepository.findAll();
+        UserLocation toReturn = null;
+        for (UserLocation userLocation : all) {
+            if (userLocation.getUserID().equals(userIDs) && userLocation.getId() == locationIDs) {
+                toReturn = userLocation;
+                userLocationRepository.delete(userLocation);
+            }
+        }
+        return toReturn;
+    }
 
     public String RecAlgorithm(int cost, String rating, String reviews, String contact, String location) throws IOException {
         location = location.replaceAll(" ", "%20");

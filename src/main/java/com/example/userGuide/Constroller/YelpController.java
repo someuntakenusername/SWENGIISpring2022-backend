@@ -1,11 +1,15 @@
 package com.example.userGuide.Constroller;
 
+import com.example.userGuide.Forumns.CreateLocationForum;
+import com.example.userGuide.Forumns.CreateUserForumn;
 import com.example.userGuide.Service.JsonReader;
 import com.example.userGuide.Service.PreferenceService;
 import com.example.userGuide.Service.YelpService;
 import com.example.userGuide.UserGuideApplication;
 import com.example.userGuide.model.Location;
 import com.example.userGuide.model.Preference;
+import com.example.userGuide.model.User;
+import com.example.userGuide.model.UserLocation;
 import com.example.userGuide.repository.PreferenceRepository;
 import net.sf.ehcache.Element;
 import org.json.JSONArray;
@@ -34,6 +38,16 @@ public class YelpController {
     @GetMapping("/search/{location}")
     public List<Location> searchLocation(@PathVariable("location") Object name) throws IOException, JSONException {
         return getLocations((String) name);
+    }
+
+    @GetMapping("/userlocation/{id}")
+    public List<UserLocation> getUserLocations(@PathVariable("id") Object id) throws IOException, JSONException {
+        return yelpService.getUserLocations((String)id);
+    }
+
+    @GetMapping("/userlocation/remove/{id}/{userID}")
+    public UserLocation removeUserLocation(@PathVariable("id") Object locationID, @PathVariable("userID") Object userID) throws IOException, JSONException {
+        return yelpService.removeUserLocation((String)locationID, (String)userID);
     }
 
     @GetMapping("/byid/{id}")
@@ -347,5 +361,11 @@ public class YelpController {
             locations.add(new Location(id, imageSrc, name, ratings, reviewCount, prices, distance, phone, latitude, longitude));
         }
         return locations;
+    }
+
+    @RequestMapping(value = "/createlocation", method = RequestMethod.POST)
+    public UserLocation createLocation(@RequestBody CreateLocationForum createLocationForumn) {
+        System.out.println(createLocationForumn);
+        return yelpService.createLocation(createLocationForumn.getCost(), createLocationForumn.getName(), createLocationForumn.getAddress(), createLocationForumn.getPhone(), createLocationForumn.getUserID());
     }
 }
