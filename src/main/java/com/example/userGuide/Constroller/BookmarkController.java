@@ -8,6 +8,7 @@ import com.example.userGuide.Service.PreferenceService;
 import com.example.userGuide.model.Bookmark;
 import com.example.userGuide.model.Preference;
 import com.example.userGuide.model.User;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
