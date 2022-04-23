@@ -19,7 +19,6 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-
     @GetMapping("/getreviews/{id}")
     public List<Review> getReviews(@PathVariable("id") Object id) {
         return reviewService.getReviews((String)id);

@@ -16,6 +16,9 @@ public class Location implements Serializable {
     public double latitude;
     public double longitude;
 
+    public Location() {
+    }
+
     public Location(String id, String imageSrc, String name, double rating, int reviewCount, int price, double distance, String phone, double latitude, double longitude) {
         this.id = id;
         this.imageSrc = imageSrc;
