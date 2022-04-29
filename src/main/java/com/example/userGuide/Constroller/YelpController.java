@@ -2,6 +2,7 @@ package com.example.userGuide.Constroller;
 
 import com.example.userGuide.Forumns.CreateLocationForum;
 import com.example.userGuide.Forumns.CreateUserForumn;
+import com.example.userGuide.Forumns.EditLocationForumn;
 import com.example.userGuide.Service.JsonReader;
 import com.example.userGuide.Service.PreferenceService;
 import com.example.userGuide.Service.YelpService;
@@ -366,6 +367,13 @@ public class YelpController {
     @RequestMapping(value = "/createlocation", method = RequestMethod.POST)
     public UserLocation createLocation(@RequestBody CreateLocationForum createLocationForumn) {
         System.out.println(createLocationForumn);
+        return yelpService.createLocation(createLocationForumn.getCost(), createLocationForumn.getName(), createLocationForumn.getAddress(), createLocationForumn.getPhone(), createLocationForumn.getUserID());
+    }
+
+    @RequestMapping(value = "/editLocation", method = RequestMethod.POST)
+    public UserLocation editLocation(@RequestBody EditLocationForumn createLocationForumn) {
+        System.out.println(createLocationForumn);
+        yelpService.removeUserLocation(Long.toString(createLocationForumn.getLocID()), Long.toString(createLocationForumn.getUserID()));
         return yelpService.createLocation(createLocationForumn.getCost(), createLocationForumn.getName(), createLocationForumn.getAddress(), createLocationForumn.getPhone(), createLocationForumn.getUserID());
     }
 }
