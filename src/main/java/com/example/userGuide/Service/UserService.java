@@ -25,6 +25,19 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User removeUser(long id) {
+        List<User> all = userRepository.findAll();
+        User toRemove = null;
+        for (int i = 0; i < all.size() && toRemove == null; i++) {
+            if (all.get(i).getId() == id) {
+                toRemove = all.get(i);
+                userRepository.deleteById(all.get(i).getId());
+            }
+        }
+
+        return toRemove;
+    }
+
     public User userByLastname(String name) {
         List<User> users = this.userRepository.findAll();
         List<User> returned = new ArrayList<>();

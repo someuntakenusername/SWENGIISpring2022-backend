@@ -15,44 +15,52 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class YelpControllerTest {
     @Autowired
-    private PreferenceService preferenceService;
-
-    @Autowired
-    private YelpService yelpService;
+    YelpService yelpService;
 
     @Test
-    void searchLocation() throws IOException {
-        assertThat(yelpService.RecAlgorithm("telluride colorado")).isNotNull();
+    public void createNewLocation() {
+        UserLocation newLoc;
+        assertNotNull(newLoc = yelpService.createLocation(0, "Song's Hut", "1 Bear Place", "1234567890", 12345));
+        yelpService.removeUserLocation(Long.toString(newLoc.getId()), Long.toString(newLoc.getUserID()));
     }
 
     @Test
-    void getUserLocations() {
-        for(UserLocation u : yelpService.getUserLocations("0")){
-            System.out.println(u);
-        };
+    public void createDuplicateLocation() {
+        UserLocation newLoc1 = yelpService.createLocation(0, "Song's Hut", "1 Bear Place", "1234567890", 12345);
+        UserLocation newLoc2;
+        assertNotNull(newLoc2 = yelpService.createLocation(0, "Song's Hut", "1 Bear Place", "1234567890", 12345));
+        yelpService.removeUserLocation(Long.toString(newLoc1.getId()), Long.toString(newLoc1.getUserID()));
+        yelpService.removeUserLocation(Long.toString(newLoc2.getId()), Long.toString(newLoc2.getUserID()));
     }
 
     @Test
-    void removeUserLocation() {
+    public void getUserLocationsNotEmpty() {
+        UserLocation newLoc = yelpService.createLocation(0, "Song's Hut", "1 Bear Place", "1234567890", 12345);
+        assertThat(!yelpService.getUserLocations(Long.toString(newLoc.getUserID())).isEmpty());
+        yelpService.removeUserLocation(Long.toString(newLoc.getId()), Long.toString(newLoc.getUserID()));
     }
 
     @Test
-    void getById() {
+    public void getUserLocationsEmpty() {
+        assertThat(yelpService.getUserLocations("0").isEmpty());
     }
 
     @Test
-    void getRecommended() {
+    public void removeExistingUserLocation() {
+        UserLocation newLoc = yelpService.createLocation(0, "Song's Hut", "1 Bear Place", "1234567890", 12345);
+        assertNotNull(yelpService.removeUserLocation(Long.toString(newLoc.getId()), Long.toString(newLoc.getUserID())));
     }
 
     @Test
-    void recAlgo() {
+    public void removeNonExistingUserLocation() {
+        assertNull(yelpService.removeUserLocation("0", "0"));
     }
 
     @Test
-    void recAlgoOne() {
-    }
-
-    @Test
-    void createLocation() {
+    public void removeDuplicateLocation() {
+        UserLocation newLoc1 = yelpService.createLocation(0, "Song's Hut", "1 Bear Place", "1234567890", 12345);
+        UserLocation newLoc2 = yelpService.createLocation(0, "Song's Hut", "1 Bear Place", "1234567890", 12345);
+        yelpService.removeUserLocation(Long.toString(newLoc1.getId()), Long.toString(newLoc1.getUserID()));
+        assertNotNull(yelpService.removeUserLocation(Long.toString(newLoc2.getId()), Long.toString(newLoc2.getUserID())));
     }
 }
