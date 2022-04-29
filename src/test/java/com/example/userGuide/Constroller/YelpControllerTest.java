@@ -20,39 +20,5 @@ class YelpControllerTest {
     @Autowired
     private YelpService yelpService;
 
-    @Test
-    void searchLocation() throws IOException {
-        assertThat(yelpService.RecAlgorithm("telluride colorado")).isNotNull();
-    }
 
-    @Test
-    void getUserLocations() {
-        for(UserLocation u : yelpService.getUserLocations("0")){
-            System.out.println(u);
-        };
-    }
-
-    @Test
-    void removeUserLocation() {
-    }
-
-    @Test
-    void getById() {
-    }
-
-    @Test
-    void getRecommended() {
-    }
-
-    @Test
-    void recAlgo() {
-    }
-
-    @Test
-    void recAlgoOne() {
-    }
-
-    @Test
-    void createLocation() {
-    }
 }
