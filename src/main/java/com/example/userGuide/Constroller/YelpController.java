@@ -370,7 +370,7 @@ public class YelpController {
         return yelpService.createLocation(createLocationForumn.getCost(), createLocationForumn.getName(), createLocationForumn.getAddress(), createLocationForumn.getPhone(), createLocationForumn.getUserID());
     }
 
-    @RequestMapping(value = "/editLocation", method = RequestMethod.POST)
+    @RequestMapping(value = "/editLocation", method = RequestMethod.OPTIONS)
     public UserLocation editLocation(@RequestBody EditLocationForumn createLocationForumn) {
         System.out.println(createLocationForumn);
         yelpService.removeUserLocation(Long.toString(createLocationForumn.getLocID()), Long.toString(createLocationForumn.getUserID()));
