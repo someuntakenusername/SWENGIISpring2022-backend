@@ -15,9 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class YelpControllerTest {
     @Autowired
-    PreferenceService preferenceService;
-
-    @Autowired
     YelpService yelpService;
 
     @Test
