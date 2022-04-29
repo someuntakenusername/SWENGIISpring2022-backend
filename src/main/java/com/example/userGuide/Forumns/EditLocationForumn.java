@@ -60,8 +60,10 @@ public class EditLocationForumn {
 
     @Override
     public String toString() {
-        return "CreateLocationForumn{" + "cost='" + cost + '\'' +
+        String x = "CreateLocationForumn{" + "cost='" + cost + '\'' +
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' + ", phone='" + phone + '\'' + ", userID='" + userID + '\'' + ", locID='" + locID + '\'' + + '}';
+    System.out.println(x);
+    return x;
     }
 }
