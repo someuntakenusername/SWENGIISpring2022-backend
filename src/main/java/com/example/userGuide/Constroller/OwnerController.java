@@ -22,7 +22,7 @@ public class OwnerController {
 
     @GetMapping("/{id}")
     public Owner getSpecificOwner(@PathVariable("id") Object id) {
-        return ownerService.getSpecificOwner((long)id);
+        return ownerService.getSpecificOwner((Long.parseLong((String)id)));
     }
 
     @RequestMapping(value = "/createowner", method = RequestMethod.POST)
