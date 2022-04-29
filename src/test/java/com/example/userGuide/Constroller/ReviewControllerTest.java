@@ -36,7 +36,7 @@ public class ReviewControllerTest {
      void getReviews() {
         reviewService.createReview(new Review("TestLocation", "This is a test review"));
         assertThat(
-                reviewService.getReviews("testLocationId").get(0).equals(new Review("TestLocation", "This is a test review"))
+                reviewService.getReviews("TestLocation").get(0).equals(new Review("TestLocation", "This is a test review"))
         );
     }
 
