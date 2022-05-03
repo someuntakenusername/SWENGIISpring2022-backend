@@ -20,7 +20,8 @@ public class PreferenceController {
     private PreferenceService preferenceService;
 
     @RequestMapping(value = "/createpreference", method = RequestMethod.POST)
-    public Preference createPreference(CreatePreferenceForumn createPreferenceForumn) {
+    public Preference createPreference(@RequestBody CreatePreferenceForumn createPreferenceForumn) {
+        System.out.println(createPreferenceForumn);
         return preferenceService.createPreference(new Preference(Long.toString(createPreferenceForumn.getId()), createPreferenceForumn.getCost(), createPreferenceForumn.getRating(), createPreferenceForumn.getReviews(), createPreferenceForumn.getContact(), createPreferenceForumn.getCity()));
     }
 
