@@ -79,7 +79,7 @@ public class YelpService {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setDoOutput(true);
-        con.setRequestProperty("Authorization", "Bearer h5ZnJC2Z6QNEZt6iLSxW83zkQr6Obcb6WuP-rlxKw-8xU3mInevlmRnlBrs3M95W6FSR9ORrOslSlEO8YUZOB5wwf6nmplIf2ZBq2GAIXRAZi9JbPvkxEkm3Pn4WYnYx");
+        con.setRequestProperty("Authorization", "Bearer N6RH9ZOhmNSpb1-Jp6Qflwv7U_7Sn1mrQ6JmAjCDC-mnscN-8W-s3dhJvEdwuY4PxjsfcwLxk8nZnv8l-vFfMHdGrD0Q3GYXty7VoFrM3lRglhjY44cAMdCuzmlxYnYx");
         con.setConnectTimeout(5000);
         con.setReadTimeout(5000);
         BufferedReader in = new BufferedReader(
