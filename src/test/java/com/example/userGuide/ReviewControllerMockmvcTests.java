@@ -1,4 +1,8 @@
 package com.example.userGuide;
+import com.example.userGuide.Constroller.BookmarkController;
+import com.example.userGuide.Constroller.ReviewController;
+import com.example.userGuide.Service.BookmarkService;
+import com.example.userGuide.Service.ReviewService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +30,40 @@ public class ReviewControllerMockmvcTests {
     @Autowired
     private MockMvc mockMvc;
 
+    ReviewController reviewController;
+    ReviewService reviewService;
+
+    String reviewJson = "{" +
+            "\"id\":\"1\"," +
+            "\"locationID\":\"null island\"," +
+            "\"reviewtext\":\"1\"" +
+            "}";
+
     @Test
     public void testCreateRetrieveWithMockMVC() throws Exception {
-        String json = "{\"locationID\":\"locID01\",\"reviewText\":\"TestText\"}";
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/review/createreview")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(reviewJson)
+                ).andDo(print())
+                .andExpect(status().is2xxSuccessful());
 
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/review/createreview").contentType(MediaType.APPLICATION_JSON)
-                .content(json)).andExpect(status().is2xxSuccessful());
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/review/getreviews/1")
+                ).andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/review/1").accept(MediaType.APPLICATION_JSON);
+        MvcResult result1 = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse res = result1.getResponse();
+        assert(result1.getResponse().getContentLength() >= 0);
+    }
 
+    @Test
+    public void testReviewNull() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/review/createreview")
+                ).andDo(print())
+                .andExpect(status().is4xxClientError());
     }
 }
